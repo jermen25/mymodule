@@ -15,7 +15,7 @@ class MyModule extends Module
         $this->version ='1.0';
         $this->author = 'Jérôme Ménétrier';
         $this->need_instance = 0;
-        $this->ps_versions_compliancy= array('min'=>'1.5', 'max' =>_ps_version_);
+        $this->ps_versions_compliancy= array('min'=>'1.5', 'max' =>_PS_VERSION_);
 
         parent::__construct();
 
@@ -56,7 +56,7 @@ class MyModule extends Module
 
         if(!parent::uninstall())
         {
-            Db::getInstance()->Execute('DELETE FROM `'._DB_PREFIX_.'mymoduleXXX');
+            Db::getInstance()->Execute('DELETE FROM '._DB_PREFIX_.'mymoduleXXX');
             parent::uninstall();
         }
     }
