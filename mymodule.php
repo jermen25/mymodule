@@ -15,7 +15,7 @@ class MyModule extends Module
         $this->version ='1.0';
         $this->author = 'Jérôme Ménétrier';
         $this->need_instance = 0;
-        $this->ps_versions_compliancy= array('min'=>'1.5', 'max' =>_ps_version_);
+        $this->ps_versions_compliancy= array('min'=>'1.5', 'max' =>_PS_VERSION_);
 
         parent::__construct();
 
@@ -56,9 +56,35 @@ class MyModule extends Module
 
         if(!parent::uninstall())
         {
-            Db::getInstance()->Execute('DELETE FROM `'._DB_PREFIX_.'mymoduleXXX');
+            Db::getInstance()->Execute('DELETE FROM '._DB_PREFIX_.'mymoduleXXX');
             parent::uninstall();
         }
+    }
+    public function hookDisplayLeftColumn($params)
+    {
+        $this->context->smarty->assign(
+            array(
+                'my_moduel_name'=>Configuration::get('MYMODULE_NAME'),
+                'my_module_link'=>getModulelink('mymodule', 'display'),
+            )
+        );
+        return $this->display(__FILE__,'mymodule.tpl');
+    }
+
+    public function hookDisplayRightColumn($params)
+    {
+        $this->context->smarty->assign(
+            array(
+                'my_moduel_name'=>Configuration::get('MYMODULE_NAME'),
+                'my_module_link'=>getModulelink('mymodule', 'display'),
+            )
+        );
+        return $this->hookDisplayLeftColumn($params);
+    }
+
+    public function hookDisplayHeader()
+    {
+        $this->context->controller->addCSS($this->_path.'css/mymodule.css','all');
     }
 }
 
