@@ -60,6 +60,32 @@ class MyModule extends Module
             parent::uninstall();
         }
     }
+    public function hookDisplayLeftColumn($params)
+    {
+        $this->context->smarty->assign(
+            array(
+                'my_moduel_name'=>Configuration::get('MYMODULE_NAME'),
+                'my_module_link'=>getModulelink('mymodule', 'display'),
+            )
+        );
+        return $this->display(__FILE__,'mymodule.tpl');
+    }
+
+    public function hookDisplayRightColumn($params)
+    {
+        $this->context->smarty->assign(
+            array(
+                'my_moduel_name'=>Configuration::get('MYMODULE_NAME'),
+                'my_module_link'=>getModulelink('mymodule', 'display'),
+            )
+        );
+        return $this->hookDisplayLeftColumn($params);
+    }
+
+    public function hookDisplayHeader()
+    {
+        $this->context->controller->addCSS($this->_path.'css/mymodule.css','all');
+    }
 }
 
 ?>
