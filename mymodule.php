@@ -62,6 +62,8 @@ class MyModule extends Module
             parent::uninstall();
         }
     }
+
+    //function pour lier le hook
     public function hookDisplayLeftColumn($params)
     {
         $this->context->smarty->assign(
