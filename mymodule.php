@@ -12,8 +12,8 @@ class MyModule extends Module
     {
         $this->name = 'mymodule';
         $this->tab = 'front_office_features';
-        $this->version ='1.0';
-        $this->author = 'Jérôme Ménétrier';
+        $this->version = '1.0';
+        $this->author = 'jerome menetrier';
         $this->need_instance = 0;
         $this->ps_versions_compliancy= array('min'=>'1.5', 'max' =>_PS_VERSION_);
 
@@ -21,27 +21,29 @@ class MyModule extends Module
 
         $this->dysplayName = $this->l('My module');
         $this->description = $this->l('Description of my module');
-        $this->confirmUninstall = $this->l('are you surer you want to uninstall ?');
-        if(!Configuration :: get('MYMODULE_NAME'))
-        $this->warning =  $this->l('no name providded');
+        $this->confirmUninstall = $this->l('are you sure you want to uninstall ?');
+        if(!Configuration::get('MYMODULE_NAME'))
+        $this->warning =  $this->l('no name provided');
     }
 
     //declaration de la function install
     public function install()
     {/*verification de l'installation du module (true si correctement installé)*/
+
         if(parent::install()== false)
         {
             return false;
         }
-        return true;
 
         /* ajout Version 1.5 pour la gestion boutiques*/
+
         if (Shop::isFeatureActive())
         {
             Shop::setcontext(Shop::CONTEXT_ALL);
         }
 
         /* rattacher aux 2 hook et declarer une var de config*/
+
         return parent::install() &&
             $this->registerHook('leftColumn') &&
             $this->registerHook('header') &&
@@ -64,7 +66,7 @@ class MyModule extends Module
     {
         $this->context->smarty->assign(
             array(
-                'my_moduel_name'=>Configuration::get('MYMODULE_NAME'),
+                'my_module_name'=>Configuration::get('MYMODULE_NAME'),
                 'my_module_link'=>getModulelink('mymodule', 'display'),
             )
         );
@@ -75,7 +77,7 @@ class MyModule extends Module
     {
         $this->context->smarty->assign(
             array(
-                'my_moduel_name'=>Configuration::get('MYMODULE_NAME'),
+                'my_module_name'=>Configuration::get('MYMODULE_NAME'),
                 'my_module_link'=>getModulelink('mymodule', 'display'),
             )
         );
